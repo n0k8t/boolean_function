@@ -53,13 +53,29 @@ public:
     // тождественный ноль "от dimension переменных"
     static boolean_function zero(size_t dimension)
     {
-        return boolean_function(0, dimension);
+        std::vector<value_type> res;
+        
+        int len = pow(2, dimension);
+        while (res.size() != len)
+        {
+            res.push_back(0);
+        }
+        boolean_function f(res);
+        return f;
     }
 
     // тождественная единица "от dimension переменных"
     static boolean_function one(size_t dimension)
     {
-        return boolean_function(1, dimension);
+        std::vector<value_type> res;
+        
+        int len = pow(2, dimension);
+        while (res.size() != len)
+        {
+            res.push_back(1);
+        }
+        boolean_function f(res);
+        return f;
     }
 
     static boolean_function from_anf(std::vector<value_type> v)
