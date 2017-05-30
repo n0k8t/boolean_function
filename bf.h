@@ -34,8 +34,8 @@ public:
     // вернется функция "0011001100110011"
     static boolean_function var(size_t n, size_t dimension)
     {
-        int len = pow(2, dimension);
-        int k = pow(2, n);
+        double len = pow(2, dimension);
+        double k = pow(2, n);
 
         std::vector<value_type> res;
         while (res.size() != len)
@@ -54,8 +54,8 @@ public:
     static boolean_function zero(size_t dimension)
     {
         std::vector<value_type> res;
-        
-        int len = pow(2, dimension);
+
+        double len = pow(2, dimension);
         while (res.size() != len)
         {
             res.push_back(0);
@@ -68,8 +68,8 @@ public:
     static boolean_function one(size_t dimension)
     {
         std::vector<value_type> res;
-        
-        int len = pow(2, dimension);
+
+        double len = pow(2, dimension);
         while (res.size() != len)
         {
             res.push_back(1);
@@ -258,13 +258,11 @@ public:
     {
         size_type s1 = size();
         size_type s2 = rhs.size();
+        size_type s = s1 >= s2 ? s1 : s2;
 
-        if(s1 != s2)
-            return false;
-
-        for (size_type i = 0; i < s1; i++)
+        for (size_type i = 0; i < s; i++)
         {
-            if (func[i] != rhs.func[i])
+            if (func[i % s1] != rhs.func[i % s2])
                 return false;
         }
 
@@ -354,7 +352,11 @@ public:
     // количество переменных
     size_type dimension() const throw()
     {
-        return log2(func.size());
+        size_type k = 0;
+        double len = func.size();
+        for (k; len > 1; k++)
+            len /= 2;
+        return k;
     }
 
     // возвращает значение функции
